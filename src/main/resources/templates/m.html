@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, minimum-scale=1.0, maximum-scale=1.0, initial-scale=1.0, user-scalable=no">
+    <title>FrozenUI Demo</title>
+    <!-- 引入 FrozenUI -->
+    <link rel="stylesheet" href="http://i.gtimg.cn/vipstyle/frozenui/2.0.0/css/frozen.css"/>
+    <style>
+        /**重置标签默认样式*/
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            font-family: "Microsoft YaHei", Helvetica, "Meiryo UI", "Malgun Gothic", "Segoe UI", "Trebuchet MS", "Monaco", monospace, Tahoma, STXihei, "华文细黑", STHeiti, "Helvetica Neue", "Droid Sans", "wenquanyi micro hei", FreeSans, Arimo, Arial, SimSun, "宋体", Heiti, "黑体", sans-serif;
+        }
+
+        #container {
+            width: auto;
+            height: 70%;
+            background: #eee;
+            /*margin: 80px auto 0;*/
+            position: relative;
+        }
+
+        .footer {
+            width: 100%;
+            height: 20%;
+            position: absolute;
+            bottom: 0;
+            padding: 3px;
+        }
+
+        .footer input {
+            width: 80%;
+            height: 45px;
+            outline: none;
+            font-size: 3px;
+            /*		text-indent: 10px;*/
+            position: absolute;
+            border-radius: 6px;
+        }
+
+        .footer button {
+            float: right;
+        }
+
+        img {
+            width: 60px;
+            height: 60px;
+        }
+
+        .content {
+            font-size: 10px;
+            width: 100%;
+            height: 80%;
+            overflow: auto;
+            padding: 5px;
+        }
+
+/*        .content li {
+            !*margin-top: 5px;
+            padding-left: 5px;*!
+            width: 295px;
+            display: block;
+            clear: both;
+            overflow: hidden;
+        }
+        .content li span {
+            background: #7cfc00;
+            padding: 10px;
+            border-radius: 10px;
+            float: left;
+            margin: 6px 10px 0 10px;
+            max-width: 310px;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 3px #ccc;
+        }
+        .content li span.left {
+            float: left;
+            background: #fff;
+        }
+        .content li span.right {
+            float: right;
+            background: #7cfc00;
+        }*/
+    </style>
+</head>
+<body>
+<div style="height: 20em">
+    <iframe id="iframe" height="100%"  width="100%" src="https://www.vodxc.in/HGJ/67552/67552-1-7.html"
+            frameborder=0></iframe>
+</div>
+<div>
+    <div id="message"></div>
+    <!--聊天面板container-->
+    <div id="container">
+        <ul class="content"></ul>
+        <!--底部输入框以及发送框-->
+        <div class="footer">
+            <input id="text" type="text" name="title" autocomplete="off" class="layui-input">
+            <button id="btn" onclick="start()" class="layui-btn layui-btn-lg">发送</button>
+        </div>
+    </div>
+</div>
+<!-- 使用 -->
+<!--<div class="ui-btn-wrap">
+    <button class="ui-btn">常规按钮</button>
+    <button class="ui-btn disabled">不可点击按钮</button>
+</div>-->
+</body>
+</html>

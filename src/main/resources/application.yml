@@ -1,0 +1,14 @@
+pagehelper:
+  page-size-zero: true
+  support-methods-arguments: true
+  reasonable: true
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  configuration:
+    map-underscore-to-camel-case: true
+  type-aliases-package: com.example.video.pojo
+
+spring:
+  profiles:
+    active: dev

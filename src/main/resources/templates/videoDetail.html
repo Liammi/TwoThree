@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns="http://www.w3.org/1999/html">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style>
+        /**重置标签默认样式*/
+        * {
+            margin: 0;
+            padding: 0;
+            list-style: none;
+            font-family: "Microsoft YaHei", Helvetica, "Meiryo UI", "Malgun Gothic", "Segoe UI", "Trebuchet MS", "Monaco", monospace, Tahoma, STXihei, "华文细黑", STHeiti, "Helvetica Neue", "Droid Sans", "wenquanyi micro hei", FreeSans, Arimo, Arial, SimSun, "宋体", Heiti, "黑体", sans-serif;
+        }
+
+        #container {
+            width: 307px;
+            height: 530px;
+            background: #eee;
+            /*margin: 80px auto 0;*/
+            position: relative;
+        }
+
+        .footer {
+            width: 307px;
+            height: 40px;
+            position: absolute;
+            bottom: 0;
+            padding: 3px;
+        }
+
+        .footer input {
+            width: 225px;
+            height: 45px;
+            outline: none;
+            font-size: 3px;
+            /*		text-indent: 10px;*/
+            position: absolute;
+            border-radius: 6px;
+        }
+
+        .footer button {
+            float: right;
+        }
+
+        img {
+            width: 60px;
+            height: 60px;
+        }
+
+        .content {
+            font-size: 10px;
+            width: 307px;
+            height: 460px;
+            overflow: auto;
+            padding: 5px;
+        }
+
+        .content li {
+            /*margin-top: 5px;
+            padding-left: 5px;*/
+            width: 295px;
+            display: block;
+            clear: both;
+            overflow: hidden;
+        }
+
+        /*.content li img {
+            float: left;
+        }*/
+        .content li span {
+            background: #7cfc00;
+            padding: 10px;
+            border-radius: 10px;
+            float: left;
+            margin: 6px 10px 0 10px;
+            max-width: 310px;
+            border: 1px solid #ccc;
+            box-shadow: 0 0 3px #ccc;
+        }
+
+        /*.content li img.imgleft {
+            float: left;
+        }
+
+        .content li img.imgright {
+            float: right;
+        }*/
+
+        .content li span.left {
+            float: left;
+            background: #fff;
+        }
+
+        .content li span.right {
+            float: right;
+            background: #7cfc00;
+        }
+
+        /*.videoBox{
+            position:relative;
+            width:100%;
+            height:550px;
+        }
+        @media (max-width: 549px){
+            .videoBox{
+                height: 250px;
+                width: 400px;
+            }
+        }*/
+    </style>
+    <link rel="stylesheet" href="../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}">
+</head>
+<body>
+<!--因为iframe加载慢可能会导致windows.onload出现缓慢加载，所以使用div-->
+<p id="UUID" th:text="${UUID}" STYLE="display: none">UUID</p>
+<p id="id" th:text="${user.id}" STYLE="display: none">userId</p>
+<p id="aId" STYLE="display: none">0</p>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 10px;">
+    <legend th:text="${info.videoName}">片名：8864</legend>
+</fieldset>
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space30">
+        <div class="layui-col-md9">
+            <div class="videoBox">
+                <iframe id="iframe" height="100%" width="100%" src="https://r.yskanba.com/analysis/index?eurl=ZIgTUwUXvfd0OKMgcQRjV25S0UAQVgIY31Jka7%2Bplu4j%2B%2FD%2Ft2r0FwJA%2FFuxuuAXqNkUmMtm3%2BhrJd8xAzE2ZLNNmS5uoKQYMeJYNRyuQvE%3D&ec=jk4x"
+                        frameborder="0" border="0" th:src="${info.videoUrl}"></iframe>
+            </div>
+        </div>
+        <div class="layui-col-md3">
+            <div style="height: 600px">
+                <blockquote class="layui-elem-quote layui-quote-nm">
+                    <span style="color:#c2c2c2">在线：</span>
+                    <span id="userInfo"></span>
+                </blockquote>
+                <!--聊天面板container-->
+                <div id="container">
+                    <ul class="content">
+                    </ul>
+                    <!--底部输入框以及发送框-->
+                    <div class="footer">
+                        <input id="text" type="text" name="title" autocomplete="off" class="layui-input">
+                        <button id="btn" onclick="start()" class="layui-btn layui-btn-lg">发送</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+<script src="../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
+<script>
+    /**
+     * 复制内容到粘贴板
+     * content : 需要复制的内容
+     * message : 复制完后的提示，不传则默认提示"复制成功"
+     */
+    function copyToClip(content, message) {
+        var aux = document.createElement("input");
+        aux.setAttribute("value", content);
+        document.body.appendChild(aux);
+        aux.select();
+        document.execCommand("copy");
+        document.body.removeChild(aux);
+        layer.msg('复制成功！请分享给您的好友');
+    }
+
+    /**
+     * 模态框复制
+     * @type {string}
+     */
+    var url = window.location.toString();
+    layui.use('layer', function () {
+        var layer = layui.layer;
+        layer.open({
+            title: '如需邀请：请点击复制',
+            content: url,
+            btn: ['复制','取消'],
+            yes: function () {
+                copyToClip(url)
+            },
+            cancel: function () {
+                return true
+            }
+        });
+    });
+</script>
+<!--设置iframe标签-->
+<script type="text/javascript">
+    /**
+     * 调整iframe窗口的大小
+     * @type {HTMLElement}
+     */
+    var iframe = document.getElementById("iframe")
+    document.getElementById("iframe").style.height = document.getElementById("iframe").scrollWidth * 0.65 + "px"
+</script>
+
+<script type="text/javascript">
+    <!--WebSocket连接-->
+    var userInfoWebSocket = null;
+    var MessageWebSocket = null;
+    var content = document.getElementsByTagName('ul')[0]; //获取文本框的内容
+
+    function userInfoOnOpen(event) {
+        console.log("用户服务连接成功")
+    }
+
+    function userInfoOnMessage(event) {
+        console.log("用户服务收到消息")
+        $('#userInfo').html("")
+        console.log(event.data);
+        var userInfoList = JSON.parse(event.data);//返回userVO的List对象
+        userInfoList.forEach(function (value,index) {
+            $('#userInfo').append("   "+value.nickName)
+            if (value.id!=$('#id').text()){
+                $('#aId').text(value.id);
+            }
+        })
+        if (userInfoList.length===1){
+            $('#aId').text("0");
+        }
+    }
+
+    function userInfoOnError(event) {
+        console.log("用户服务连接发生错误")
+    }
+
+    function userInfoOnClose(event) {
+        console.log("用户服务连接关闭")
+    }
+
+    function twoChatOnOpen(event) {
+        console.log("聊天服务连接成功")
+    }
+
+    function twoChatOnMessage(event) {
+        var content = document.getElementsByTagName('ul')[0]; //控制屏幕滚动
+        console.log("聊天服务收到消息")
+        console.log(event.data);
+        var message = JSON.parse(event.data);
+        if (message.launchId == $('#id').text()){
+            content.innerHTML += '<li><span style="float: right;background: #fff;">' + message.content + '</span></li>';
+        }else {
+            content.innerHTML += '<li><span style="float: left;background: #7cfc00;">' + message.content + '</span></li>';
+        }
+        content.scrollTop = content.scrollHeight;
+    }
+
+    function twoChatOnError(event) {
+        console.log("聊天服务连接发生错误")
+    }
+
+    function twoChatOnClose(event) {
+        console.log("聊天服务连接关闭")
+    }
+
+    $(document).ready(
+        function () {
+            var homeId = $('#UUID').text();
+            var userId = $('#id').text();
+            var serverHot = window.location.host;
+            userInfoWebSocket = new WebSocket('ws://' + serverHot + '/userInfoTransfer/' + homeId + '/' + userId);
+
+            userInfoWebSocket.onopen = function (event) {
+                userInfoOnOpen(event)
+            };
+            userInfoWebSocket.onmessage = function (event) {
+                userInfoOnMessage(event)
+            };
+            userInfoWebSocket.onerror = function (event) {
+                userInfoOnError(event)
+            };
+            userInfoWebSocket.onclose = function (event) {
+                userInfoOnClose(event)
+            };
+
+            //----------------------------js事件处理机制，创建一个新连接---------------------------
+
+            MessageWebSocket = new WebSocket('ws://' + serverHot + '/twoChat/' + homeId);
+
+            MessageWebSocket.onopen = function (event) {
+                twoChatOnOpen(event);
+            }
+            MessageWebSocket.onmessage = function (ev) {
+                twoChatOnMessage(ev)
+            }
+            MessageWebSocket.onerror = function (ev) {
+                twoChatOnError(ev)
+            }
+            MessageWebSocket.onclose = function (ev) {
+                twoChatOnClose(ev)
+            }
+        }
+    )
+
+    /*获取输入的内容*/
+    function start() {
+        var userId = $('#id').text();
+        var anotherUserId = $('#aId').text();
+        var content = document.getElementsByTagName('ul')[0]; //控制屏幕滚动
+        var text = document.getElementById('text'); //获取输入内容
+        if (text.value === '') {
+            console.log("输入信息为空")
+        } else {
+            var message = {
+                launchId: userId,
+                receiveId: anotherUserId,//用户提交receiveId,默认为0，代表只有一个人来聊天。
+                content: text.value
+            }
+            MessageWebSocket.send(JSON.stringify(message));
+            text.value = '';//重置text.value
+            content.scrollTop = content.scrollHeight;// 内容过多时,将滚动条放置到最底端
+            //发送socket连接信息
+        }
+    }
+</script>
+<script>
+    // 监控enter键：发送信息
+    $(document).keyup(function (e) {
+        var key = e.which;
+        if (key === 13) {
+            start();
+        }
+    });
+</script>
+</html>

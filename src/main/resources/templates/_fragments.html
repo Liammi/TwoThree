@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<ul th:fragment="menu(n)" class="layui-nav" lay-filter="">
+    <li class="layui-nav-item" th:classappend="${n==1} ? 'layui-this'"><a href="/home">资源列表</a></li>
+    <li class="layui-nav-item" th:classappend="${n==2} ? 'layui-this'"><a href="/admin/manage">管理视频</a></li>
+    <li class="layui-nav-item" th:classappend="${n==3} ? 'layui-this'"><a href="/admin/add">添加视频</a></li>
+    <li class="layui-nav-item" style="float: right">
+        <a href="/userUpdate"><img src="https://tupian.qqw21.com/article/UploadPic/2020-5/2020592210413248.jpg" class="layui-nav-img" th:text="${name}"></a>
+        <dl class="layui-nav-child">
+            <dd><a href="/userUpdate">修改信息</a></dd>
+            <dd><a href="/logout">退出</a></dd>
+        </dl>
+    </li>
+</ul>
+</body>
+</html>

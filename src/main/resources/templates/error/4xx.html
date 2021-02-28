@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<link rel="stylesheet" href="../../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}">
+<body>
+<ul  class="layui-nav layui-bg-molv" lay-filter="">
+    <li class="layui-nav-item"><a href="/home">资源列表</a></li>
+    <li class="layui-nav-item"><a href="/admin/manage">管理视频</a></li>
+    <li class="layui-nav-item"><a href="/admin/add">添加视频</a></li>
+    <li class="layui-nav-item" style="float: right">
+        <a href="/userUpdate"><img src="http://cdn.duitang.com/uploads/item/201501/10/20150110154959_HY3ZB.thumb.224_0.jpeg" class="layui-nav-img"></a>
+        <dl class="layui-nav-child">
+            <dd><a href="/userUpdate">修改信息</a></dd>
+            <dd><a href="/logout">退出</a></dd>
+        </dl>
+    </li>
+</ul>
+<br>
+<br>
+<br>
+<br>
+<div style="text-align: center">
+    <h1>404</h1>
+</div>
+<script src="../../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+</body>
+<script>
+    //注意：导航 依赖 element 模块，否则无法进行功能性操作
+    layui.use('element', function () {
+        var element = layui.element;
+
+        //…
+    });
+</script>
+</html>
