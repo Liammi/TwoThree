@@ -25,10 +25,9 @@ public class TwoChatSocketController {
     @OnMessage
     public void onMessage(Session session, String message, @PathParam("homeId") String homeId) {
         List<Session> sessionList = groupMemberInfoMap.get(homeId);
-        log.info(message);
         JSONObject jsonObject = JSONObject.parseObject(message);
         SocketMessage socketMessage = JSONObject.toJavaObject(jsonObject, SocketMessage.class);
-        System.out.println(socketMessage);
+        log.info(String.valueOf(socketMessage));
         /*if (sessionList.size() >= 2) {//判断人数大于等于2时
             Long receiveId;
             for (Session session : sessionList
@@ -63,7 +62,7 @@ public class TwoChatSocketController {
             groupMemberInfoMap.put(homeId, sessionList);
         }
         sessionList.add(session);
-        System.out.println("Message Client connected");
+        log.info("Message Client connected");
     }
 
     // 关闭连接调用的方法
@@ -71,7 +70,7 @@ public class TwoChatSocketController {
     public void onClose(Session session, @PathParam("homeId") String homeId) {
         List<Session> sessionList = groupMemberInfoMap.get(homeId);
         sessionList.remove(session);
-        System.out.println("Message Connection closed");
+        log.info("Message Connection closed");
         log.info("homeId: {}, sessionList size: {}", homeId, sessionList.size());
         if (sessionList.size()==0){
             groupMemberInfoMap.remove(homeId);
@@ -81,7 +80,7 @@ public class TwoChatSocketController {
     // 传输消息错误调用的方法
     @OnError
     public void OnError(Throwable error) {
-        System.out.println("Message Connection error");
+        log.info("Message Connection error");
     }
 }
 
