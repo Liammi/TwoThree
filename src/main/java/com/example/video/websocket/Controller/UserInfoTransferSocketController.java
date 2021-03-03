@@ -44,7 +44,7 @@ public class UserInfoTransferSocketController {
             groupMemberInfoMap.put(homeId, sessionList);
         }
         sessionList.add(session);
-        log.info("Connection connected");
+        log.info("UserInfo Connection connected");
         log.info(session.getId());
         log.info("homeId: {}, sessionList size: {}", homeId, sessionList.size());
 
@@ -80,7 +80,7 @@ public class UserInfoTransferSocketController {
             log.info(us.toString());
         }
 
-        for (Session s : sessionList) {//向前端发送消息
+        for (Session s : sessionList) {//向前端发送当前用户集合
             try {
                 s.getBasicRemote().sendObject(userInfoVOList);
                 log.info(userInfoVOList.toString());
@@ -88,17 +88,20 @@ public class UserInfoTransferSocketController {
                 e.printStackTrace();
             }
         }
-        log.info("Connection closed");
+        log.info("UserInfo Connection closed");
         log.info("homeId: {}, sessionList size: {}", homeId, sessionList.size());
+        if(sessionList.size()==0){
+            groupMemberInfoMap.remove(homeId);
+        }
     }
 
     // 传输消息错误调用的方法
     @OnError
     public void OnError(Throwable error) {
-        log.info("Connection error");
+        log.info("UserInfo Connection error");
     }
 
-    //TODO:为什么可以对这个方法自动注入？
+    //TODO:Service自动注入
     @Autowired
     public void setUserService(UserService userService) {
 

@@ -113,9 +113,12 @@
 </head>
 <body>
 <!--因为iframe加载慢可能会导致windows.onload出现缓慢加载，所以使用div-->
+<!--UUID房间的唯一ID-->
 <p id="UUID" th:text="${UUID}" STYLE="display: none">UUID</p>
+<!--用户的ID号码用于发送消息-->
 <p id="id" th:text="${user.id}" STYLE="display: none">userId</p>
-<p id="aId" STYLE="display: none">0</p>
+<!--好友的ID号码用于发送消息-->
+<p id="anotherId" STYLE="display: none">0</p>
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 10px;">
     <legend th:text="${info.videoName}">片名：8864</legend>
 </fieldset>
@@ -151,7 +154,7 @@
 </body>
 <script src="../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.2/dist/jquery.min.js"></script>
-<script>
+<script type="text/javascript">
     /**
      * 复制内容到粘贴板
      * content : 需要复制的内容
@@ -208,18 +211,18 @@
     }
 
     function userInfoOnMessage(event) {
-        console.log("用户服务收到消息")
+        console.log("用户加入或者退出")
         $('#userInfo').html("")
         console.log(event.data);
-        var userInfoList = JSON.parse(event.data);//返回userVO的List对象
+        var userInfoList = JSON.parse(event.data);//解析当前房间中的用户List
         userInfoList.forEach(function (value,index) {
             $('#userInfo').append("   "+value.nickName)
-            if (value.id!=$('#id').text()){
-                $('#aId').text(value.id);
+            if (value.id!==$('#id').text()){
+                $('#anotherId').text(value.id);
             }
         })
-        if (userInfoList.length===1){
-            $('#aId').text("0");
+        if (userInfoList.length===1){//只有一个用户时
+            $('#anotherId').text("0");
         }
     }
 
@@ -240,9 +243,11 @@
         console.log("聊天服务收到消息")
         console.log(event.data);
         var message = JSON.parse(event.data);
-        if (message.launchId == $('#id').text()){
+        if (message.launchId === $('#id').text()){
+            //自己为消息发送方时，样式为靠右
             content.innerHTML += '<li><span style="float: right;background: #fff;">' + message.content + '</span></li>';
         }else {
+            //如果自己不是消息发送方，样式为靠左
             content.innerHTML += '<li><span style="float: left;background: #7cfc00;">' + message.content + '</span></li>';
         }
         content.scrollTop = content.scrollHeight;
@@ -295,10 +300,10 @@
         }
     )
 
-    /*获取输入的内容*/
+    /*发送消息的逻辑*/
     function start() {
         var userId = $('#id').text();
-        var anotherUserId = $('#aId').text();
+        var anotherUserId = $('#anotherId').text();
         var content = document.getElementsByTagName('ul')[0]; //控制屏幕滚动
         var text = document.getElementById('text'); //获取输入内容
         if (text.value === '') {

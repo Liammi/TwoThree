@@ -63,7 +63,7 @@ public class TwoChatSocketController {
             groupMemberInfoMap.put(homeId, sessionList);
         }
         sessionList.add(session);
-        System.out.println("Client connected");
+        System.out.println("Message Client connected");
     }
 
     // 关闭连接调用的方法
@@ -71,13 +71,17 @@ public class TwoChatSocketController {
     public void onClose(Session session, @PathParam("homeId") String homeId) {
         List<Session> sessionList = groupMemberInfoMap.get(homeId);
         sessionList.remove(session);
-        System.out.println("Connection closed");
+        System.out.println("Message Connection closed");
+        log.info("homeId: {}, sessionList size: {}", homeId, sessionList.size());
+        if (sessionList.size()==0){
+            groupMemberInfoMap.remove(homeId);
+        }
     }
 
     // 传输消息错误调用的方法
     @OnError
     public void OnError(Throwable error) {
-        System.out.println("Connection error");
+        System.out.println("Message Connection error");
     }
 }
 
