@@ -104,7 +104,6 @@ public class UserInfoTransferSocketController {
     //TODO:Service自动注入
     @Autowired
     public void setUserService(UserService userService) {
-
         UserInfoTransferSocketController.userService = userService;
 
     }

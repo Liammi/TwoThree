@@ -1,9 +1,12 @@
 package com.example.video.websocket.Controller;
 
+import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.example.video.util.SensitiveFilter;
 import com.example.video.websocket.config.WebSocketUserInfoEncoding;
 import com.example.video.websocket.pojo.SocketMessage;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 
 import javax.websocket.*;
@@ -20,6 +23,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class TwoChatSocketController {
 
     private static final ConcurrentHashMap<String, List<Session>> groupMemberInfoMap = new ConcurrentHashMap<>();
+    private static SensitiveFilter sensitiveFilter;
 
     // 收到消息调用的方法。
     @OnMessage
@@ -27,6 +31,7 @@ public class TwoChatSocketController {
         List<Session> sessionList = groupMemberInfoMap.get(homeId);
         JSONObject jsonObject = JSONObject.parseObject(message);
         SocketMessage socketMessage = JSONObject.toJavaObject(jsonObject, SocketMessage.class);
+        socketMessage.setContent(sensitiveFilter.filter(socketMessage.getContent()));
         log.info(String.valueOf(socketMessage));
         /*if (sessionList.size() >= 2) {//判断人数大于等于2时
             Long receiveId;
@@ -46,7 +51,7 @@ public class TwoChatSocketController {
         User finalUser = user;*/
         sessionList.forEach(item -> {
             try {
-                item.getBasicRemote().sendText(message);
+                item.getBasicRemote().sendText(JSON.toJSONString(socketMessage));
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -80,7 +85,13 @@ public class TwoChatSocketController {
     // 传输消息错误调用的方法
     @OnError
     public void OnError(Throwable error) {
+       error.printStackTrace();
         log.info("Message Connection error");
+    }
+
+    @Autowired
+    public void setSensentiveFilter(SensitiveFilter sensentiveFilter){
+        TwoChatSocketController.sensitiveFilter = sensentiveFilter;
     }
 }
 
