@@ -28,6 +28,9 @@ public interface UserDao {
     @ResultType(User.class)
     User getUserByNickName(String nickName);
 
-    @Insert("insert into user(user_name, password, nick_name) VALUES (#{userName},#{password},#{nickName})")
+    @Insert("insert into user(user_name, password, nick_name,avatar) VALUES (#{userName},#{password},#{nickName},#{avatar})")
     void saveUser(User user);
+
+    @Insert("update user set password=#{password},nick_name=#{nickName},avatar=#{avatar} where user_name=#{userName}")
+    void updateUser(User user);
 }

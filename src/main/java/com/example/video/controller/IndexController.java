@@ -37,22 +37,29 @@ public class IndexController {
 	@RequestMapping("/admin/manage")
 	public String manage(Model model,HttpSession httpSession) {
 		model.addAttribute("infos",videoInfoService.ListVideoInfoAndType());
-		model.addAttribute("name",((User)httpSession.getAttribute("user")).getNickName());
+		model.addAttribute("user",(User)httpSession.getAttribute("user"));
 		return "videoManage";
 	}
 
-	@RequestMapping("/admin/add")
+	@RequestMapping("/addVideo")
 	public String add(Model model,HttpSession httpSession) {
 		model.addAttribute("types",videoTypeService.listType());
-		model.addAttribute("name",((User)httpSession.getAttribute("user")).getNickName());
+		model.addAttribute("user",(User)httpSession.getAttribute("user"));
 		return "videoAdd";
+	}
+
+	@RequestMapping("/addVideoType")
+	public String addT(Model model,HttpSession httpSession) {
+		model.addAttribute("user",(User)httpSession.getAttribute("user"));
+		model.addAttribute("infos",videoTypeService.listTypeAndCount());
+		return "typeAdd";
 	}
 
 	@GetMapping("/home")
 	public String home(Model model ,HttpSession httpSession) {
 		model.addAttribute("infos", videoInfoService.ListVideoInfoAndType());
 		model.addAttribute("UUID", IdUtil.simpleUUID());
-		model.addAttribute("name",((User)httpSession.getAttribute("user")).getNickName());
+		model.addAttribute("user",(User)httpSession.getAttribute("user"));
 		return "home";
 	}
 

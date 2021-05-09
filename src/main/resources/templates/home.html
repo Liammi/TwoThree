@@ -19,14 +19,14 @@
 </style>
 <body>
 <ul th:replace="_fragments :: menu(1)" class="layui-nav layui-bg-molv" lay-filter="">
-    <li class="layui-nav-item  layui-this"><a href="/home">资源列表</a></li>
-    <li class="layui-nav-item"><a href="/admin/manage">管理资源</a></li>
-    <li class="layui-nav-item"><a href="/admin/add">添加视频</a></li>
+    <li class="layui-nav-item" ><a href="/home">资源列表</a></li>
+    <li class="layui-nav-item" ><a href="/addVideo">添加视频</a></li>
+    <li class="layui-nav-item" ><a href="/addVideoType">添加分类</a></li>
     <li class="layui-nav-item" style="float: right">
-        <a href=""><img src="//t.cn/RCzsdCq" class="layui-nav-img">我</a>
+        <a href="/userUpdate"><img src="https://gitee.com/inndownn/picture/raw/image/img/20210509110012.png" class="layui-nav-img" th:text="${user.nickName}" th:src="${user.avatar}"></a>
         <dl class="layui-nav-child">
-            <dd><a href="javascript:">修改信息</a></dd>
-            <dd><a href="javascript:">退出</a></dd>
+            <dd><a href="/userUpdate">修改信息</a></dd>
+            <dd><a href="/logout">退出</a></dd>
         </dl>
     </li>
 </ul>
@@ -48,7 +48,7 @@
         <td th:text="${info.videoType.typeName}" width="100">人生就像是一场修行</td>
         <td width="240">
             <div class="layui-btn-container">
-                <a th:href="@{/video/{id}/{UUID}(id=${info.id},UUID=${UUID})}"><button type="button" class="layui-btn layui-btn-radius layui-btn-normal">查看</button></a>
+                <a th:href="@{/video/{id}/{UUID}(id=${info.id},UUID=${UUID})}"><button type="button" class="layui-btn layui-btn-radius layui-btn-normal">观看该影片</button></a>
             </div>
         </td>
     </tr>

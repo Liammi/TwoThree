@@ -1,6 +1,9 @@
 package com.example.video;
 
+import com.example.video.dao.VideoTypeDao;
+import com.example.video.pojo.VideoType;
 import com.example.video.service.UserService;
+import com.example.video.service.VideoTypeService;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +16,12 @@ class TwoThreeApplicationTests {
 
 	@Autowired
 	private UserService userService;
+	@Autowired
+	private VideoTypeService videoType;
 	@Test
 	void contextLoads() {
-		System.out.println(userService.getUserById(2L));
+
+		System.out.println(videoType.listTypeAndCount());
 
 	}
 

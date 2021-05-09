@@ -7,15 +7,15 @@
 </head>
 <link rel="stylesheet" href="../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}">
 <body>
-<ul th:replace="_fragments :: menu(3)" class="layui-nav" lay-filter="">
-    <li class="layui-nav-item "><a href="/home">资源列表</a></li>
-    <li class="layui-nav-item"><a href="/admin/manage">管理资源</a></li>
-    <li class="layui-nav-item layui-this"><a href="/admin/add">添加视频</a></li>
+<ul th:replace="_fragments :: menu(2)" class="layui-nav" lay-filter="">
+    <li class="layui-nav-item" ><a href="/home">资源列表</a></li>
+    <li class="layui-nav-item" ><a href="/addVideo">添加视频</a></li>
+    <li class="layui-nav-item" ><a href="/addVideoType">添加分类</a></li>
     <li class="layui-nav-item" style="float: right">
-        <a href=""><img src="//t.cn/RCzsdCq" class="layui-nav-img">我</a>
+        <a href="/userUpdate"><img src="https://gitee.com/inndownn/picture/raw/image/img/20210509110012.png" class="layui-nav-img" th:text="${user.nickName}" th:src="${user.avatar}"></a>
         <dl class="layui-nav-child">
-            <dd><a href="javascript:">修改信息</a></dd>
-            <dd><a href="javascript:">退出</a></dd>
+            <dd><a href="/userUpdate">修改信息</a></dd>
+            <dd><a href="/logout">退出</a></dd>
         </dl>
     </li>
 </ul>
@@ -62,7 +62,7 @@
 
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                <button class="layui-btn" lay-submit lay-filter="formDemo">添加</button>
                 <button type="reset" class="layui-btn layui-btn-primary">重置</button>
             </div>
         </div>

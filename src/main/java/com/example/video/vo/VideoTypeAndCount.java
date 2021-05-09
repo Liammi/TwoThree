@@ -1,11 +1,12 @@
-package com.example.video.pojo;
+package com.example.video.vo;
 
+import com.example.video.pojo.VideoInfo;
 import lombok.Data;
 
 import java.util.List;
 
 @Data
-public class VideoType {
+public class VideoTypeAndCount {
 
     private Integer id;
 
@@ -15,6 +16,6 @@ public class VideoType {
 
     private List<VideoInfo> listVideoInfo;
 
-
+    private Integer count;
 
 }

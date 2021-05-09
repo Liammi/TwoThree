@@ -8,7 +8,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
 /**
@@ -33,6 +35,7 @@ public class VideoInfoController {
         videoInfoService.saveVideoInfo(videoInfo);
         return "redirect:/home";
     }
+
 
     @RequestMapping("/deleteVideoInfo/{id}")
     public String deleteVideoInfo(@PathVariable("id") Integer id, Model model) {

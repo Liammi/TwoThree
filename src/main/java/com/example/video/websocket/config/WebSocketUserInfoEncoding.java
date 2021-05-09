@@ -1,7 +1,6 @@
 package com.example.video.websocket.config;
 
 import com.alibaba.fastjson.JSON;
-import com.example.video.pojo.User;
 import com.example.video.vo.UserInfoVO;
 
 import javax.websocket.EncodeException;

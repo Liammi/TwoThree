@@ -9,79 +9,18 @@
     </select>
 
 
-<!--	<resultMap id="BaseResultMap" type="com.sunjian.entity.VideoType">
-		<id column="id" property="id" jdbcType="INTEGER" />
-		<result column="type_name" property="typeName" jdbcType="VARCHAR" />
-	</resultMap>
-	<sql id="Base_Column_List">
-		id, type_name
-	</sql>
-	<select id="selectByPrimaryKey" resultMap="BaseResultMap"
-		parameterType="java.lang.Integer">
-		select
-		<include refid="Base_Column_List" />
-		from video_type
-		where id = #{id,jdbcType=INTEGER}
-	</select>
-	<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
-		delete from
-		video_type
-		where id = #{id,jdbcType=INTEGER}
-	</delete>
-	<insert id="insert" parameterType="com.sunjian.entity.VideoType">
-		insert into video_type (id,
-		type_name)
-		values (#{id,jdbcType=INTEGER},
-		#{typeName,jdbcType=VARCHAR})
-	</insert>
-	<insert id="insertSelective" parameterType="com.sunjian.entity.VideoType">
-		insert into video_type
-		<trim prefix="(" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				id,
-			</if>
-			<if test="typeName != null">
-				type_name,
-			</if>
-		</trim>
-		<trim prefix="values (" suffix=")" suffixOverrides=",">
-			<if test="id != null">
-				#{id,jdbcType=INTEGER},
-			</if>
-			<if test="typeName != null">
-				#{typeName,jdbcType=VARCHAR},
-			</if>
-		</trim>
-	</insert>
-	<update id="updateByPrimaryKeySelective" parameterType="com.sunjian.entity.VideoType">
-		update video_type
-		<set>
-			<if test="typeName != null">
-				type_name = #{typeName,jdbcType=VARCHAR},
-			</if>
-		</set>
-		where id = #{id,jdbcType=INTEGER}
-	</update>
-	<update id="updateByPrimaryKey" parameterType="com.sunjian.entity.VideoType">
-		update video_type
-		set type_name = #{typeName,jdbcType=VARCHAR}
-		where id =
-		#{id,jdbcType=INTEGER}
-	</update>
-	<select id="selectList" resultMap="BaseResultMap"
-		parameterType="com.sunjian.entity.VideoType">
-		select
-		<include refid="Base_Column_List" />
-		from video_type
-		where
-		1=1
-		<if test="id != null">
-			and #{id,jdbcType=INTEGER},
-		</if>
-		<if test="typeName != null">
-			and #{typeName,jdbcType=VARCHAR},
-		</if>
-
-	</select>-->
+    <resultMap id="TypeAndVideoMap" type="videoTypeAndCount">
+        <id property="id" column="id"></id>
+        <result property="typeName" column="type_name"></result>
+        <result property="typeDescription" column="type_description"></result>
+        <!--    配置user对象中account集合的映射，ofType指定类的-->
+        <collection property="listVideoInfo" ofType="VideoInfo">
+            <id property="id" column="aid"></id>
+        </collection>
+    </resultMap>
+    <!--实现一对多查询-->
+    <select id="listTypeAndCount" resultMap="TypeAndVideoMap">
+        select video_type.*,video_info.id as aid from video_type left join video_info on  video_type.id=video_info.video_type_id;
+    </select>
 
 </mapper>

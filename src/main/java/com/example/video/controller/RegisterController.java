@@ -17,18 +17,32 @@ public class RegisterController {
     @Autowired
     private UserService userService;
 
+    /**
+     * 跳转到登陆界面
+     * @return
+     */
     @GetMapping()
     public String register() {
         return "register";
     }
 
+    /**
+     * 保存用户，重定向到登陆界面
+     * @param user
+     * @return
+     */
     @PostMapping("/save")
     public String saveRegister(User user) {
-        System.out.println(user);
+        user.setAvatar("https://gitee.com/inndownn/picture/raw/image/img/20210509110012.png");
         userService.saveUser(user);
         return "redirect:/";
     }
 
+    /**
+     * 检查username是否重复
+     * @param name
+     * @return
+     */
     @GetMapping("/username/{name}")
     @ResponseBody
     public Map<String, String> userNameProving(@PathVariable String name) {
@@ -46,6 +60,11 @@ public class RegisterController {
         return resultMap;
     }
 
+    /**
+     * 检查nickname是否重复
+     * @param name
+     * @return
+     */
     @GetMapping("/nickname/{name}")
     @ResponseBody
     public Map<String, String> nickNameProving(@PathVariable String name) {

@@ -7,7 +7,6 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
 </head>
 <body style="background-image: url('images/congruent_pentagon.png')">
-<br8632
 <br>
 <br>
 <br>
@@ -24,12 +23,14 @@
         </div>
         <div class="field">
             <div class="ui checkbox">
-                <input type="checkbox"  name="remember" id="remember" checked>
+                <input type="checkbox" name="remember" id="remember" checked>
                 <label>记住我</label>
             </div>
         </div>
         <button class="ui button" type="submit" onclick="check()">Submit</button>
-        <a href="/register"><button class="ui button" type="button" >register</button></a>
+        <a href="/register">
+            <button class="ui button" type="button">register</button>
+        </a>
     </form>
 </div>
 </body>
@@ -38,25 +39,25 @@
 <script src="../static/js/jquery.cookie.js" th:src="@{/js/jquery.cookie.js}"></script>
 <!-- 一加载就执行  用于记住我功能 -->
 <script>
-    $(document).ready(function(){
-        if($.cookie("password") !== ''){
+    $(document).ready(function () {
+        if ($.cookie("password") !== '') {
             $("#password").val($.cookie("password"));
         }
-        if($.cookie("name") !== ''){
+        if ($.cookie("name") !== '') {
             $("#name").val($.cookie("name"));
         }
     })
 </script>
 <script>
-    function check(){
+    function check() {
         //记住我功能使用
         //写入cookie
         if ($("#remember").prop("checked") === true) {
             var name = $("#name").val();
             var password = $("#password").val();
             // alert(password);
-            $.cookie("name", name,{ expires: 7 });
-            $.cookie("password", password,{ expires: 7 }); // 存储一个带7天期限的 cookie 如果{ expires: 7 } 不写则cookie只相当回话效果
+            $.cookie("name", name, {expires: 7});
+            $.cookie("password", password, {expires: 7}); // 存储一个带7天期限的 cookie 如果{ expires: 7 } 不写则cookie只相当回话效果
         } else {
             $.cookie("name", "");
             $.cookie("password", "");

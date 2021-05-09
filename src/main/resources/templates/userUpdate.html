@@ -10,25 +10,26 @@
 </head>
 <body>
 <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
-    <legend>用户注册</legend>
+    <legend>更改用户信息</legend>
 </fieldset>
 <div style="margin-left: 450px;margin-right: 200px">
-    <form class="layui-form" action="/register/save" method="post">
+    <form class="layui-form" action="/update" method="post">
 
         <div class="layui-form-item">
             <label class="layui-form-label">昵称</label>
             <div class="layui-input-inline">
-                <input id="nickNameId" type="text" name="nickName" required lay-verify="required" placeholder="昵称" autocomplete="off"
-                       class="layui-input">
+                <input id="nickNameId" type="text" name="nickName" required lay-verify="required" placeholder="昵称"
+                       autocomplete="off"
+                       class="layui-input" th:value="${user.nickName}">
             </div>
             <div class="layui-form-mid layui-word-aux" id="nickNameTips"></div>
         </div>
 
         <div class="layui-form-item">
-            <label class="layui-form-label">登陆用户名</label>
-            <div class="layui-input-inline">
-                <input id="userNameId" type="text" name="userName" required lay-verify="required" placeholder="登陆用户名" autocomplete="off"
-                       class="layui-input">
+            <label class="layui-form-label">头像链接</label>
+            <div class="layui-input-block">
+                <input type="text" name="avatar" required lay-verify="required" placeholder="头像链接" autocomplete="off"
+                       class="layui-input" th:value="${user.avatar}">
             </div>
             <div class="layui-form-mid layui-word-aux" id="userNameTips"></div>
         </div>
@@ -38,7 +39,7 @@
             <div class="layui-input-inline">
                 <input type="password" name="password" required lay-verify="required" placeholder="请输入密码"
                        autocomplete="off"
-                       class="layui-input">
+                       class="layui-input" th:value="${user.password}">
             </div>
             <div class="layui-form-mid layui-word-aux"></div>
         </div>
@@ -48,86 +49,64 @@
             <div class="layui-input-inline">
                 <input type="password" required lay-verify="required" placeholder="请再次输入密码"
                        autocomplete="off"
-                       class="layui-input">
+                       class="layui-input" th:value="${user.password}">
             </div>
             <div class="layui-form-mid layui-word-aux"></div>
         </div>
 
         <div class="layui-form-item">
             <div class="layui-input-block">
-                <button class="layui-btn" lay-submit  lay-filter="formDemo">立即提交</button>
-                <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                <button class="layui-btn" lay-submit lay-filter="formDemo">保存修改</button>
+                <a href="/home">
+                    <button type="button" class="layui-btn layui-btn-primary">退出</button>
+                </a>
             </div>
         </div>
 
     </form>
+    <blockquote class="layui-elem-quote">头像链接推荐使用<a href="https://imgtu.com/" target="_blank"
+                                                    style="color: cornflowerblue">路过图床</a>上传图片并且粘贴链接
+    </blockquote>
 </div>
 
 <script>
-    var nickNameSign = 0;
-    var userNameSign = 0;
+    var nickNameSign = 1;
     //Demo
     layui.use('form', function () {
         var form = layui.form;
 
         //监听提交
         form.on('submit(formDemo)', function (data) {
-            if (nickNameSign===0 || userNameSign===0){
+            if (nickNameSign === 0) {
                 alert("昵称或用户名重复，请修改")
                 return false
-            }else {
+            } else {
                 return true
             }
         });
     });
     $("#nickNameId").blur(function () {
         $.ajax({
-            url: "/register/nickname/"+$("#nickNameId").val(),
-            type:"get",
-            contentType:"application/json;charset=UTF-8",
-            dataType:"json",
-            success:function (data) {
-                if (data.name === "empty"){
+            url: "/register/nickname/" + $("#nickNameId").val(),
+            type: "get",
+            contentType: "application/json;charset=UTF-8",
+            dataType: "json",
+            success: function (data) {
+                if (data.name === "empty") {
                     $("#nickNameTips").text("昵称不能为空");
                     nickNameSign = 0;
                 }
-                if (data.name === "exist"){
+                if (data.name === "exist") {
                     $("#nickNameTips").text("昵称已存在不可使用");
                     nickNameSign = 0;
                 }
-                if (data.name === "notExist"){
+                if (data.name === "notExist") {
                     $("#nickNameTips").text("昵称可以使用");
                     nickNameSign = 1;
                 }
             },
-            error:function (data) {
+            error: function (data) {
                 $("#nickNameTips").text("发生未知错误，请联系管理员");
-                nickNameSign = 0;
-            }
-        })
-    })
-    $("#userNameId").blur(function () {
-        $.ajax({
-            url: "/register/username/"+$("#userNameId").val(),
-            type:"get",
-            contentType:"application/json;charset=UTF-8",
-            dataType:"json",
-            success:function (data) {
-                if (data.name === "empty"){
-                    $("#userNameTips").text("用户名不能为空");
-                    userNameSign = 0;
-                }
-                if (data.name === "exist"){
-                    $("#userNameTips").text("用户名已存在不可使用");
-                    userNameSign = 0;
-                }
-                if (data.name === "notExist"){
-                    $("#userNameTips").text("用户名可以使用");
-                    userNameSign = 1;
-                }
-            },
-            error:function (data) {
-                $("#userNameTips").text("发生未知错误，请联系管理员");
                 nickNameSign = 0;
             }
         })
