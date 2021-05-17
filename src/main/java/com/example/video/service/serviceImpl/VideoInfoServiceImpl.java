@@ -59,9 +59,9 @@ public class VideoInfoServiceImpl implements VideoInfoService {
 
 	@Override
 	public List<VideoInfo> searchVideoInfoLike(String s) {
+		//保证索引前缀匹配原则
 		StringBuilder stringBuilder = new StringBuilder(s);
 		stringBuilder.append("%");
-		stringBuilder.insert(0,"%");
 		return videoInfoDao.searchVideoInfoLike(stringBuilder.toString());
 	}
 
