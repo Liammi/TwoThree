@@ -15,6 +15,12 @@ public interface VideoTypeService {
 
     List<VideoTypeAndCount> listTypeAndCount();
 
+    VideoType getVideoTypeById(Integer id);
+
     void saveType(VideoType type);
+
+    void deleteType(Integer id);
+
+    void updateVideoType(VideoType videoType);
 
 }

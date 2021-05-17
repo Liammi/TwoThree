@@ -33,3 +33,6 @@ build/
 ### Product YML ###
 /src/main/resources/application-pro.yml
 
+### OSS secret key and public key ###
+/src/main/java/com/example/video/enums/OssConstant.java
+

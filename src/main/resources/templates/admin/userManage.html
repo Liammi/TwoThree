@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+<head>
+    <meta charset="UTF-8">
+    <title>管理用户</title>
+</head>
+<link rel="stylesheet" href="../../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}">
+<style>
+    .layui-table-cell {
+        font-size:14px;
+        padding:0 5px;
+        height:auto;
+        overflow:visible;
+        text-overflow:inherit;
+        white-space:normal;
+        word-break: break-all;
+    }
+</style>
+<body>
+<ul th:replace="admin/_fragments :: menu(1)" class="layui-nav" lay-filter="">
+    <li class="layui-nav-item" th:classappend="${n==1} ? 'layui-this'"><a href="/home">管理用户</a></li>
+    <li class="layui-nav-item" th:classappend="${n==3} ? 'layui-this'"><a href="/addVideo">管理视频</a></li>
+    <li class="layui-nav-item" th:classappend="${n==4} ? 'layui-this'"><a href="/addVideoType">管理分类</a></li>
+    <li class="layui-nav-item" style="float: right">
+        <a href=""><img src="https://gitee.com/inndownn/picture/raw/image/img/20210510200411.png" class="layui-nav-img">我</a>
+        <dl class="layui-nav-child">
+            <dd><a href="javascript:;">退出</a></dd>
+        </dl>
+    </li>
+</ul>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+    <legend>管理用户</legend>
+</fieldset>
+
+<table class="layui-table layui-table-cell">
+    <thead>
+    <tr>
+        <th>用户名</th>
+        <th>昵称</th>
+        <th>用户违规信息(头像URL)</th>
+        <th>操作</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="info : ${infos}">
+        <td th:text="${info.userName}">贤心</td>
+        <td th:text="${info.nickName}" style="font-size: 1px">www.tttt.com</td>
+        <td th:text="${info.avatar}"></td>
+        <td width="240">
+            <div class="layui-btn-container">
+                <a th:href="@{/admin/deleteUser/{id}(id=${info.id})}"><button type="button" class="layui-btn layui-btn-radius layui-btn-normal">删除</button></a>
+            </div>
+        </td>
+    </tr>
+
+    </tbody>
+</table>
+
+</body>
+<script src="../../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+<script>
+    //注意：导航 依赖 element 模块，否则无法进行功能性操作
+    layui.use('element', function () {
+        var element = layui.element;
+
+        //…
+    });
+</script>
+</html>

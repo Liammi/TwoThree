@@ -3,34 +3,43 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
-    <title>Title</title>
+    <title>Login</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.4/semantic.min.css">
 </head>
-<body style="background-image: url('images/congruent_pentagon.png')">
+<!--<body style="background-image: url('images/instagram_profile_image.png')">-->
+<body>
 <br>
 <br>
 <br>
 <br>
-<div class="ui container">
+<div class="ui container" style="padding-right: 250px;padding-left: 250px">
+    <div class="msg_desc">
+        <img style="max-width:100%;overflow:hidden;"
+             src="https://gitee.com/inndownn/picture/raw/image/img/facebook_cover_photo_1.png" alt="">
+    </div>
     <form class="ui form" action="/jump" method="post">
-        <div class="field">
-            <label>name</label>
-            <input type="text" name="userName" placeholder="name" id="name" autocomplete="off">
-        </div>
-        <div class="field">
-            <label>password</label>
-            <input type="password" name="password" id="password" placeholder="password">
-        </div>
-        <div class="field">
-            <div class="ui checkbox">
-                <input type="checkbox" name="remember" id="remember" checked>
-                <label>记住我</label>
+        <div style="padding-left: 50px;padding-right: 50px">
+            <div class="field">
+                <label>name</label>
+                <input type="text" name="userName" placeholder="name" id="name" autocomplete="off">
             </div>
+            <div class="field">
+                <label>password</label>
+                <input type="password" name="password" id="password" placeholder="password">
+            </div>
+            <div class="field">
+                <div class="ui checkbox">
+                    <input type="checkbox" name="remember" id="remember" checked>
+                    <label>remember me</label>
+                </div>
+            </div>
+
+            <button class="ui button" type="submit" onclick="check()">login</button>
+            <a href="/register">
+                <button class="ui button" type="button">register</button>
+            </a>
         </div>
-        <button class="ui button" type="submit" onclick="check()">Submit</button>
-        <a href="/register">
-            <button class="ui button" type="button">register</button>
-        </a>
+
     </form>
 </div>
 </body>

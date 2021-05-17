@@ -1,7 +1,9 @@
 
 package com.example.video.service.serviceImpl;
 
+import com.example.video.dao.VideoInfoDao;
 import com.example.video.dao.VideoTypeDao;
+import com.example.video.pojo.VideoInfo;
 import com.example.video.pojo.VideoType;
 import com.example.video.service.VideoTypeService;
 import com.example.video.vo.VideoTypeAndCount;
@@ -34,8 +36,23 @@ public class VideoTypeServiceImpl implements VideoTypeService {
 	}
 
 	@Override
+	public VideoType getVideoTypeById(Integer id) {
+		return videoTypeDao.getVideoTypeById(id);
+	}
+
+	@Override
 	public void saveType(VideoType type) {
 		videoTypeDao.saveType(type);
+	}
+
+	@Override
+	public void deleteType(Integer id) {
+		videoTypeDao.deleteType(id);
+	}
+
+	@Override
+	public void updateVideoType(VideoType videoType) {
+		videoTypeDao.updateVideoType(videoType);
 	}
 
 }

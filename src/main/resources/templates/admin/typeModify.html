@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>修改影片分类信息</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <link rel="stylesheet" href="../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}">
+    <script src="../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+</head>
+<body>
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>修改影片分类信息</legend>
+</fieldset>
+<div style="margin-left: 450px;margin-right: 200px">
+    <form class="layui-form" action="/admin/modifyType/save" method="post">
+
+        <div class="layui-form-item" style="display: none">
+            <label class="layui-form-label">分类名称</label>
+            <div class="layui-input-inline">
+                <input type="text" name="id" required lay-verify="required" placeholder="分类名称"
+                       autocomplete="off"
+                       class="layui-input" th:value="${type.id}">
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">分类名称</label>
+            <div class="layui-input-inline">
+                <input  type="text" name="typeName" required lay-verify="required" placeholder="分类名称"
+                       autocomplete="off"
+                       class="layui-input" th:value="${type.typeName}">
+            </div>
+            <div class="layui-form-mid layui-word-aux" id="nickNameTips"></div>
+        </div>
+
+        <div class="layui-form-item">
+            <label class="layui-form-label">分类描述</label>
+            <div class="layui-input-block">
+                <input type="text" name="typeDescription" required lay-verify="required" placeholder="分类描述" autocomplete="off"
+                       class="layui-input" th:value="${type.typeDescription}">
+            </div>
+            <div class="layui-form-mid layui-word-aux" id="userNameTips"></div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-input-block">
+                <button class="layui-btn  layui-btn-normal" lay-submit lay-filter="formDemo">保存修改并退出</button>
+                <a href="/admin/typeManage">
+                    <button type="button" class="layui-btn layui-btn-primary">退出</button>
+                </a>
+            </div>
+        </div>
+
+    </form>
+</div>
+
+<script>
+    var nickNameSign = 1;
+    //Demo
+    layui.use('form', function () {
+        var form = layui.form;
+        // 校验两次密码是否一致
+        form.verify({
+
+        });
+    });
+</script>
+</body>
+</html>

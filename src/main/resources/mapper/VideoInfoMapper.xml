@@ -9,24 +9,40 @@
     <result column="video_name" property="videoName" jdbcType="VARCHAR" />
     <result column="video_url" property="videoUrl" jdbcType="VARCHAR" />
     <result column="video_type_id" property="videoTypeId" jdbcType="INTEGER" />
+    <result column="is_file" property="filed"/>
     <association property="videoType" javaType="VideoType">
       <result column="type_name" property="typeName"></result>
     </association>
   </resultMap>
 
-  <select id="ListAllInfoAndType" resultMap="Info">
-    select i.id, video_name, video_url, video_type_id,type_name
+  <resultMap id="VideoInfo" type="VideoInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="video_name" property="videoName" jdbcType="VARCHAR" />
+    <result column="video_url" property="videoUrl" jdbcType="VARCHAR" />
+    <result column="video_type_id" property="videoTypeId" jdbcType="INTEGER" />
+    <result column="is_file" property="filed"/>
+  </resultMap>
+
+  <select id="listAllInfoAndType" resultMap="Info">
+    select i.id, video_name, video_url, video_type_id,type_name,is_file
     from video_info i
            inner join video_type t
                       on i.video_type_id=t.id;
   </select>
 
-  <select id="getVideoTypeById" resultType="videoInfo">
+  <select id="getVideoTypeById" resultMap="VideoInfo">
     select * from video_info where id = #{id};
   </select>
 
+  <select id="searchVideoInfoLike" resultMap="Info" parameterType="java.lang.String">
+    select i.id, video_name, video_url, video_type_id,type_name
+    from video_info i
+           inner join video_type t
+                      on i.video_type_id=t.id where video_name like #{s};
+  </select>
+
   <insert id="saveVideoInfo" parameterType="videoInfo">
-    insert into video_info(video_name, video_url, video_type_id) value (#{videoName},#{videoUrl},#{videoTypeId});
+    insert into video_info(video_name, video_url, video_type_id,is_file) value (#{videoName},#{videoUrl},#{videoTypeId},#{filed});
   </insert>
 
   <delete id="deleteVideoInfo" parameterType="integer">

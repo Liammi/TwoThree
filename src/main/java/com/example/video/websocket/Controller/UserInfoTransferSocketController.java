@@ -2,7 +2,7 @@ package com.example.video.websocket.Controller;
 
 import com.example.video.service.UserService;
 import com.example.video.vo.UserInfoVO;
-import com.example.video.websocket.config.WebSocketUserInfoEncoding;
+import com.example.video.websocket.config.SocketMessageEncoder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 @Controller
-@ServerEndpoint(value = "/userInfoTransfer/{homeId}/{userId}", encoders = {WebSocketUserInfoEncoding.class})
+@ServerEndpoint(value = "/userInfoTransfer/{homeId}/{userId}", encoders = {SocketMessageEncoder.class})
 public class UserInfoTransferSocketController {
 
     private static UserService userService;
@@ -50,7 +50,7 @@ public class UserInfoTransferSocketController {
 
         for (Session s : sessionList) {
             Map<String, String> stringMap = s.getPathParameters();
-            us = userService.getUserById(Long.valueOf(stringMap.get("userId")));
+            us = userService.getUserFromCache(Long.valueOf(stringMap.get("userId")));
             userInfoVOList.add(us);
             log.info(us.toString());
         }
@@ -97,7 +97,7 @@ public class UserInfoTransferSocketController {
 
     // 传输消息错误调用的方法
     @OnError
-    public void OnError(Throwable error) {
+    public void onError(Throwable error) {
         log.info("UserInfo Connection error");
     }
 

@@ -18,7 +18,7 @@ import java.util.Map;
 public class SensitiveFilter {
 
     // 替换符
-    private static final String REPLACEMENT = "*";
+    private static final String REPLACEMENT = "***";
 
     private TrieNode rootNode = new TrieNode();
 

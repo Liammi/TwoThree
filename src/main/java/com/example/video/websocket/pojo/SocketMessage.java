@@ -16,6 +16,5 @@ public class SocketMessage {
     private Long receiveId;
     private String content;
     private Date creatTime;
-    private Integer type;
 
 }

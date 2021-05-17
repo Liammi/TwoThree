@@ -2,6 +2,7 @@ package com.example.video.controller;
 
 import com.example.video.pojo.User;
 import com.example.video.service.UserService;
+import com.example.video.util.Toolbox;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
@@ -34,6 +35,8 @@ public class RegisterController {
     @PostMapping("/save")
     public String saveRegister(User user) {
         user.setAvatar("https://gitee.com/inndownn/picture/raw/image/img/20210509110012.png");
+        String pwdMd5 = Toolbox.md5(user.getPassword());
+        user.setPassword(pwdMd5);
         userService.saveUser(user);
         return "redirect:/";
     }

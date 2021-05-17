@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>管理员登陆</title>
+</head>
+<link rel="stylesheet" href="../../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}">
+<link rel="stylesheet" href="../../static/css/style.css" th:href="@{/css/style.css}">
+<body>
+
+<div class="login-main">
+    <header class="layui-elip">管理员登录</header>
+    <form class="layui-form" action="/admin/jump" method="post">
+        <div class="layui-input-inline">
+            <input type="text" name="adminName" required lay-verify="required" placeholder="用户名" autocomplete="off"
+                   class="layui-input">
+        </div>
+        <div class="layui-input-inline">
+            <input type="password" name="password" required lay-verify="required" placeholder="密码" autocomplete="off"
+                   class="layui-input">
+        </div>
+        <div class="layui-input-inline login-btn">
+            <button lay-submit lay-filter="login" class="layui-btn">登录</button>
+        </div>
+        <hr/>
+        <!--<div class="layui-input-inline">
+            <button type="button" class="layui-btn layui-btn-primary">QQ登录</button>
+        </div>
+        <div class="layui-input-inline">
+            <button type="button" class="layui-btn layui-btn-normal">微信登录</button>
+        </div>-->
+        <p>
+            <a href="/admin/register" class="fl">立即注册</a>
+<!--            <a href="javascript:;" class="fr">忘记密码？</a>-->
+        </p>
+    </form>
+</div>
+
+<script src="../../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+
+<script type="text/javascript">
+
+</script>
+</body>
+</html>

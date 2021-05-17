@@ -3,7 +3,7 @@ package com.example.video.websocket.Controller;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.example.video.util.SensitiveFilter;
-import com.example.video.websocket.config.WebSocketUserInfoEncoding;
+import com.example.video.websocket.config.SocketMessageEncoder;
 import com.example.video.websocket.pojo.SocketMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +19,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 @Controller
-@ServerEndpoint(value = "/twoChat/{homeId}", encoders = {WebSocketUserInfoEncoding.class})
+@ServerEndpoint(value = "/twoChat/{homeId}", encoders = {SocketMessageEncoder.class})
 public class TwoChatSocketController {
 
     private static final ConcurrentHashMap<String, List<Session>> groupMemberInfoMap = new ConcurrentHashMap<>();

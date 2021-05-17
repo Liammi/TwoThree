@@ -2,26 +2,24 @@
 package com.example.video.service;
 
 import com.example.video.pojo.VideoInfo;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
 public interface VideoInfoService {
 
-	List<VideoInfo> ListVideoInfoAndType();
+	List<VideoInfo> listVideoInfoAndType();
 
-	VideoInfo getVideoInfoById(int id);
+	VideoInfo getVideoInfoById(Integer id);
 
 	void saveVideoInfo(VideoInfo videoInfo);
 
+	String saveVideo(MultipartFile multipartFile);
+
 	void deleteVideoInfo(Integer id);
 
+	List<VideoInfo> searchVideoInfoLike(String s);
 
-/*
-	public VideoInfo getVideoInfo(int id);
+	void updateVideoInfo(VideoInfo videoInfo);
 
-	public List<VideoInfo> getVoideAll(VideoInfo videoInfo);
-
-	public int addVideoInfo(VideoInfo record);
-
-	public int addVoide(VideoInfo videoInfo);*/
 }

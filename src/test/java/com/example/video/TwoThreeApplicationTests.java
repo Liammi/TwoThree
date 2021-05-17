@@ -1,5 +1,7 @@
 package com.example.video;
 
+import com.example.video.dao.AdminDao;
+import com.example.video.dao.VideoInfoDao;
 import com.example.video.dao.VideoTypeDao;
 import com.example.video.pojo.VideoType;
 import com.example.video.service.UserService;
@@ -18,11 +20,18 @@ class TwoThreeApplicationTests {
 	private UserService userService;
 	@Autowired
 	private VideoTypeService videoType;
+	@Autowired
+	private VideoInfoDao videoInfoDao;
+	@Autowired
+	private AdminDao adminDao;
 	@Test
 	void contextLoads() {
-
-		System.out.println(videoType.listTypeAndCount());
-
+		System.out.println(userService.listUser());
+	}
+	@Test
+	void listVideo() {
+		System.out.println(videoInfoDao.listAllInfoAndType());
+		System.out.println(videoInfoDao.getVideoTypeById(30));
 	}
 
 }

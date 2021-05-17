@@ -4,20 +4,21 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<link rel="stylesheet" href="../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}">
+<link rel="stylesheet" href="../../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}">
 <body>
 <ul th:fragment="menu(n)" class="layui-nav" lay-filter="">
-    <li class="layui-nav-item" th:classappend="${n==1} ? 'layui-this'"><a href="/home">资源列表</a></li>
-<!--    <li class="layui-nav-item" th:classappend="${n==2} ? 'layui-this'"><a href="/admin/manage">管理视频</a></li>-->
-    <li class="layui-nav-item" th:classappend="${n==3} ? 'layui-this'"><a href="/addVideo">添加视频</a></li>
-    <li class="layui-nav-item" th:classappend="${n==4} ? 'layui-this'"><a href="/addVideoType">添加分类</a></li>
+    <li class="layui-nav-item" th:classappend="${n==1} ? 'layui-this'"><a href="/admin/userManage">管理用户</a></li>
+    <li class="layui-nav-item" th:classappend="${n==2} ? 'layui-this'"><a href="/admin/videoManage">管理视频</a></li>
+    <li class="layui-nav-item" th:classappend="${n==3} ? 'layui-this'"><a href="/admin/typeManage">管理分类</a></li>
+    <li class="layui-nav-item" th:classappend="${n==4} ? 'layui-this'"><a href="/admin/addVideo">添加视频</a></li>
+    <li class="layui-nav-item" th:classappend="${n==5} ? 'layui-this'"><a href="/admin/addVideoType">添加分类</a></li>
     <li class="layui-nav-item" style="float: right">
-        <a href="/userUpdate"><img src="https://gitee.com/inndownn/picture/raw/image/img/20210509110012.png" class="layui-nav-img" th:text="${user.nickName}" th:src="${user.avatar}"></a>
+        <a href="/admin/logout"><img src="https://gitee.com/inndownn/picture/raw/image/img/20210510200411.png" class="layui-nav-img">我</a>
         <dl class="layui-nav-child">
-            <dd><a href="/userUpdate">修改信息</a></dd>
-            <dd><a href="/logout">退出</a></dd>
+            <dd><a href="/admin/logout">退出</a></dd>
         </dl>
     </li>
 </ul>
+
 </body>
 </html>

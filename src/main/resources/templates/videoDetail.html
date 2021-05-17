@@ -3,7 +3,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title th:text="|🎈🎈🎈 ${info.videoName}|">Title</title>
     <style>
         /**重置标签默认样式*/
         * {
@@ -243,7 +243,7 @@
         console.log("聊天服务收到消息")
         console.log(event.data);
         var message = JSON.parse(event.data);
-        if (message.launchId === $('#id').text()){
+        if (message.launchId == $('#id').text()){
             //自己为消息发送方时，样式为靠右
             content.innerHTML += '<li><span style="float: right;background: #fff;">' + message.content + '</span></li>';
         }else {
