@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+    <title>消息记录</title>
+</head>
+<link rel="stylesheet" href="../static/layui/css/layui.css" th:href="@{/layui/css/layui.css}">
+<body>
+<ul th:replace="_fragments :: menu(5)" class="layui-nav" lay-filter="">
+    <li class="layui-nav-item"><a href="/home">视频列表</a></li>
+    <li class="layui-nav-item"><a href="/search">搜索视频</a></li>
+    <li class="layui-nav-item"><a href="/addVideo">添加视频</a></li>
+    <li class="layui-nav-item"><a href="/addVideoType">添加分类</a></li>
+    <li class="layui-nav-item"><a href="/messageRecord">消息记录</a></li>
+    <li class="layui-nav-item" style="float: right">
+        <a href="/userUpdate"><img src="https://gitee.com/inndownn/picture/raw/image/img/20210509110012.png"
+                                   class="layui-nav-img" th:text="${user.nickName}" th:src="${user.avatar}"></a>
+        <dl class="layui-nav-child">
+            <dd><a href="/userUpdate">修改信息</a></dd>
+            <dd><a href="/logout">退出</a></dd>
+        </dl>
+    </li>
+</ul>
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 30px;">
+    <legend>消息记录</legend>
+</fieldset>
+
+<div class="layui-collapse">
+    <div class="layui-colla-item" th:each="item : ${listMessageHashMap}">
+        <h2 class="layui-colla-title">
+            <div>
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <span th:text="${item.key.nickName}">杜甫</span>&nbsp;&nbsp;
+                <img src="https://gitee.com/inndownn/picture/raw/image/img/20210509110012.png"
+                     class="layui-nav-img" th:src="${item.key.avatar}">
+                <span style="margin-left : 900px">
+                    <span th:text="${user.nickName}">李白</span>
+                    <img src="https://gitee.com/inndownn/picture/raw/image/img/20210509110012.png"
+                     class="layui-nav-img" th:src="${user.avatar}">
+                </span>
+            </div>
+        </h2>
+        <div class="layui-colla-content layui-show" th:each="messages : ${item.value}">
+            <span th:text="${messages.content}" th:style="${messages.launchId == user.id} ? 'margin-left : 1200px' : 'margin-left : 200px'"></span>
+            <span th:text="${#dates.format(messages.createTime,'yyyy/MM/dd HH:mm')}" style="float: right"></span>
+        </div>
+    </div>
+</div>
+</body>
+<script src="../static/layui/layui.js" th:src="@{/layui/layui.js}"></script>
+<script>
+    //Demo
+    layui.use('form', function () {
+        var form = layui.form;
+
+        //监听提交
+        form.on('submit(formDemo)', function (data) {
+            // layer.msg(JSON.stringify(data.field));
+            // return false;
+        });
+    });
+    //注意：导航 依赖 element 模块，否则无法进行功能性操作
+    layui.use('element', function () {
+        var element = layui.element;
+
+        //…
+    });
+
+</script>
+<script>
+  //注意：折叠面板 依赖 element 模块，否则无法进行功能性操作
+  layui.use('element', function () {
+    var element = layui.element;
+
+    //…
+  });
+</script>
+</html>

@@ -2,7 +2,7 @@ package com.example.video.websocket.Controller;
 
 import com.example.video.service.UserService;
 import com.example.video.vo.UserInfoVO;
-import com.example.video.websocket.config.SocketMessageEncoder;
+import com.example.video.websocket.config.UserInfoEncoder;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,7 +18,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 @Controller
-@ServerEndpoint(value = "/userInfoTransfer/{homeId}/{userId}", encoders = {SocketMessageEncoder.class})
+@ServerEndpoint(value = "/userInfoTransfer/{homeId}/{userId}", encoders = {UserInfoEncoder.class})
 public class UserInfoTransferSocketController {
 
     private static UserService userService;
@@ -105,7 +105,6 @@ public class UserInfoTransferSocketController {
     @Autowired
     public void setUserService(UserService userService) {
         UserInfoTransferSocketController.userService = userService;
-
     }
 
 }

@@ -217,7 +217,7 @@
         var userInfoList = JSON.parse(event.data);//解析当前房间中的用户List
         userInfoList.forEach(function (value,index) {
             $('#userInfo').append("   "+value.nickName)
-            if (value.id!==$('#id').text()){
+            if (value.id!=$('#id').text()){
                 $('#anotherId').text(value.id);
             }
         })

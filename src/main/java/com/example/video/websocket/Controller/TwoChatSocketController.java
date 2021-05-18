@@ -2,8 +2,9 @@ package com.example.video.websocket.Controller;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
+import com.example.video.service.SocketMessageService;
 import com.example.video.util.SensitiveFilter;
-import com.example.video.websocket.config.SocketMessageEncoder;
+
 import com.example.video.websocket.pojo.SocketMessage;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,24 +15,35 @@ import javax.websocket.server.PathParam;
 import javax.websocket.server.ServerEndpoint;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Slf4j
 @Controller
-@ServerEndpoint(value = "/twoChat/{homeId}", encoders = {SocketMessageEncoder.class})
+@ServerEndpoint(value = "/twoChat/{homeId}")
 public class TwoChatSocketController {
 
     private static final ConcurrentHashMap<String, List<Session>> groupMemberInfoMap = new ConcurrentHashMap<>();
     private static SensitiveFilter sensitiveFilter;
+    private static SocketMessageService socketMessageService;
 
-    // 收到消息调用的方法。
+    /**
+     *
+     * @param session
+     * @param message  var message = {launchId: userId,receiveId: anotherUserId,content:value}
+     * @param homeId
+     */
     @OnMessage
     public void onMessage(Session session, String message, @PathParam("homeId") String homeId) {
         List<Session> sessionList = groupMemberInfoMap.get(homeId);
         JSONObject jsonObject = JSONObject.parseObject(message);
         SocketMessage socketMessage = JSONObject.toJavaObject(jsonObject, SocketMessage.class);
         socketMessage.setContent(sensitiveFilter.filter(socketMessage.getContent()));
+        if (!socketMessage.getReceiveId().equals(0L)){
+            socketMessage.setCreateTime(new Date());
+            socketMessageService.saveSocketMessage(socketMessage);
+        }
         log.info(String.valueOf(socketMessage));
         /*if (sessionList.size() >= 2) {//判断人数大于等于2时
             Long receiveId;
@@ -92,6 +104,11 @@ public class TwoChatSocketController {
     @Autowired
     public void setSensentiveFilter(SensitiveFilter sensentiveFilter){
         TwoChatSocketController.sensitiveFilter = sensentiveFilter;
+    }
+
+    @Autowired
+    public void setSocketMessageService(SocketMessageService socketMessageService){
+        TwoChatSocketController.socketMessageService = socketMessageService;
     }
 }
 

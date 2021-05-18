@@ -9,6 +9,7 @@ import javax.websocket.EndpointConfig;
 /**
  * SocketMessage编码器，将SocketMessage转为json对象给前端发送
  */
+@Deprecated
 public class SocketMessageDecoder implements Encoder.Text<SocketMessage> {
 
     @Override

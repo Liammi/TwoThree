@@ -9,9 +9,9 @@ import javax.websocket.EndpointConfig;
 import java.util.List;
 
 /**
- * 编码器：将user信息发送到前端
+ * 编码器：将当前房间的userList信息变为json对象发送到前端
  */
-public class SocketMessageEncoder implements Encoder.Text<List<UserInfoVO>> {
+public class UserInfoEncoder implements Encoder.Text<List<UserInfoVO>> {
 
     @Override
     public String encode(List<UserInfoVO> user) throws EncodeException {
