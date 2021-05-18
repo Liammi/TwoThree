@@ -110,5 +110,7 @@ public class TwoChatSocketController {
     public void setSocketMessageService(SocketMessageService socketMessageService){
         TwoChatSocketController.socketMessageService = socketMessageService;
     }
+
+
 }
 
